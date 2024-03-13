@@ -108,7 +108,7 @@ Error_code split(List &source, List &oddlist, List &evenlist) {
     return success;
 }
 
-// Example usage
+// Usage
 int main() {
     List a_list = {1, 2, 3, 4, 5};
     List_entry x;
