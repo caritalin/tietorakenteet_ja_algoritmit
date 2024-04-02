@@ -1,44 +1,83 @@
 #include <iostream>
 #include <vector>
-#include <chrono>
+#include <cstdlib> // rand()
+#include <ctime>   // time()
+#include <chrono>  // for measuring time
 
-int sequentialSearch(const std::vector<int>& data, int key) {
+using namespace std;
+using namespace std::chrono;
+
+// Function declarations
+int sequentialSearch(const vector<int>& data, int key);
+vector<int> generateData(int size);
+
+// Increment 1 - Sequential Search
+void increment1() {
+    int size, key;
+    cout << "Enter the size of the data: ";
+    cin >> size;
+
+    vector<int> data = generateData(size);
+
+    cout << "Enter the key value to be searched: ";
+    cin >> key;
+
+    auto start = high_resolution_clock::now();
+    int result = sequentialSearch(data, key);
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(end - start);
+
+    if (result != -1) {
+        cout << "Key found at index: " << result << endl;
+    } else {
+        cout << "Key not found." << endl;
+    }
+
+    cout << "Execution time: " << duration.count() << " milliseconds" << endl;
+}
+
+// Function implementations
+
+int sequentialSearch(const vector<int>& data, int key) {
     for (int i = 0; i < data.size(); ++i) {
         if (data[i] == key) {
             return i;
         }
     }
-    return -1; // Key not found
+    return -1;
 }
 
-int main() {
-    int size, key;
-    std::cout << "Enter the size of the data: ";
-    std::cin >> size;
-
-    // Generating data with odd numbers
-    std::vector<int> data;
+vector<int> generateData(int size) {
+    vector<int> data(size);
     for (int i = 1; i <= size * 2; i += 2) {
         data.push_back(i);
     }
+    return data;
+}
 
-    std::cout << "Enter the key value to be searched: ";
-    std::cin >> key;
+int main() {
+    int choice;
 
-    auto start = std::chrono::high_resolution_clock::now();
+    do {
+        cout << "\n***** Menu *****" << endl;
+        cout << "1. Increment 1 - Sequential Search" << endl;
+        cout << "0. Exit" << endl;
+        cout << "*****************" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-    int result = sequentialSearch(data, key);
-
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-    if (result != -1) {
-        std::cout << "Key found at index: " << result << std::endl;
-    } else {
-        std::cout << "Key not found." << std::endl;
-    }
-
-    std::cout << "Execution time: " << duration.count() << " milliseconds" << std::endl;
+        switch (choice) {
+            case 1:
+                increment1();
+                break;
+            case 0:
+                cout << "Exiting the program. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please enter a valid option." << endl;
+                break;
+        }
+    } while (choice != 0);
 
     return 0;
 }
