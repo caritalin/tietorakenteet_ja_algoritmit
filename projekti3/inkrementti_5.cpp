@@ -23,7 +23,12 @@ vector<int> generateData(int size);
 void increment1() {
     int size, key;
     cout << "Enter the size of the data: ";
-    cin >> size;
+    if (!(cin >> size) || size <= 0) {
+        cout << "Invalid input. Size must be a positive integer." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
 
     vector<int> data;
     for (int i = 1; i <= size * 2; i += 2) {
@@ -31,7 +36,12 @@ void increment1() {
     }
 
     cout << "Enter the key value to be searched: ";
-    cin >> key;
+    if (!(cin >> key)) {
+        cout << "Invalid input. Please enter a valid integer." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
 
     auto start = high_resolution_clock::now();
     int result = sequentialSearch(data, key);
@@ -51,12 +61,22 @@ void increment1() {
 void increment2() {
     int size, key;
     cout << "Enter the size of the data: ";
-    cin >> size;
+    if (!(cin >> size) || size <= 0) {
+        cout << "Invalid input. Size must be a positive integer." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
 
     vector<int> data = generateData(size);
 
     cout << "Enter the key value to be searched: ";
-    cin >> key;
+    if (!(cin >> key)) {
+        cout << "Invalid input. Please enter a valid integer." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
 
     auto start = high_resolution_clock::now();
     int result = sequentialSearch(data, key);
@@ -95,13 +115,13 @@ void increment3() {
         cin >> input;
 
         if (!isPositiveInteger(input)) {
-            cout << "Invalid input. Please enter a positive number.\n";
+            cout << "Invalid input. Please enter a positive integer." << endl;
             continue;
         }
 
         size = stoi(input);
         if (size <= 0) {
-            cout << "Invalid size. Please enter a positive number.\n";
+            cout << "Invalid size. Please enter a positive number." << endl;
         } else {
             break;
         }
@@ -127,8 +147,8 @@ void increment4() {
     int size;
     cout << "Enter the size of the data to be sorted: ";
 
-    while (!(cin >> size)) {
-        cout << "Invalid input. Please enter a valid integer." << endl;
+    while (!(cin >> size) || size <= 0) {
+        cout << "Invalid input. Please enter a valid positive integer." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -151,10 +171,23 @@ void increment5() {
     vector<int> data;
     int size;
     cout << "Enter the size of the data to be sorted: ";
-    cin >> size;
+    if (!(cin >> size) || size <= 0) {
+        cout << "Invalid input. Size must be a positive integer." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
 
     for (int i = 0; i < size; ++i) {
-        data.push_back(rand() % 100);
+        int element;
+        cout << "Enter element " << i+1 << ": ";
+        if (!(cin >> element)) {
+            cout << "Invalid input. Please enter valid integers." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            return;
+        }
+        data.push_back(element);
     }
 
     cout << "Unsorted data:" << endl;
@@ -185,7 +218,12 @@ int main() {
         cout << "5. Increment 5 - Selection Sort" << endl;
         cout << "0. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        if (!(cin >> choice)) {
+            cout << "Invalid input. Please enter a valid integer." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
 
         switch (choice) {
             case 1:
